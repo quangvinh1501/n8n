@@ -1,0 +1,22 @@
+﻿services:
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    ports:
+      - '5678:5678'
+    extra_hosts:
+      - 'ivms.keppelland.com.vn:host-gateway'
+    environment:
+      - N8N_HOST=n8n.keppelland.com.vn
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=https
+      - WEBHOOK_URL=https://n8n.keppelland.com.vn:5678
+      - N8N_EDITOR_BASE_URL=https://n8n.keppelland.com.vn:5678
+      - N8N_SSL_KEY=/home/node/.n8n/ssl/n8n-key.pem
+      - N8N_SSL_CERT=/home/node/.n8n/ssl/n8n-cert.pem
+      - DB_TYPE=sqlite
+      - DB_SQLITE_DATABASE=/home/node/.n8n/database.sqlite
+    volumes:
+      - ./n8n_data:/home/node/.n8n
+      - ./ssl:/home/node/.n8n/ssl
